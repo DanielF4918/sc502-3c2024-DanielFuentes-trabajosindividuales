@@ -15,19 +15,13 @@ function calcularDeducciones() {
     let impuestoRenta = 0;
 
     if (salarioBruto > 4783000) {
-        impuestoRenta += (salarioBruto - 4783000) * 0.25;
-        impuestoRenta += (4783000 - 2392000) * 0.20;
-        impuestoRenta += (2392000 - 1363000) * 0.15;
-        impuestoRenta += (1363000 - 929000) * 0.10;
+        impuestoRenta = (salarioBruto - 4783000) * 0.25;
     } else if (salarioBruto > 2392000) {
-        impuestoRenta += (salarioBruto - 2392000) * 0.20;
-        impuestoRenta += (2392000 - 1363000) * 0.15;
-        impuestoRenta += (1363000 - 929000) * 0.10;
+        impuestoRenta = (salarioBruto - 2392000) * 0.20;
     } else if (salarioBruto > 1363000) {
-        impuestoRenta += (salarioBruto - 1363000) * 0.15;
-        impuestoRenta += (1363000 - 929000) * 0.10;
+        impuestoRenta = (salarioBruto - 1363000) * 0.15;
     } else if (salarioBruto > 929000) {
-        impuestoRenta += (salarioBruto - 929000) * 0.10;
+        impuestoRenta = (salarioBruto - 929000) * 0.10;
     }
 
     const salarioNeto = salarioBruto - cargasSocialesTotales - impuestoRenta;
