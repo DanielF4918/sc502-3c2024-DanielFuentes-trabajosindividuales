@@ -39,16 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const taskCard = document.createElement("div");
       taskCard.className = "col-md-4 mb-3";
       taskCard.innerHTML = `
-              <div class="card">
-                  <div class="card-body">
-                      <h5 class="card-title">${task.title}</h5>
-                      <p class="card-text">${task.description}</p>
-                      <p class="card-text"><small class="text-muted">Due: ${task.dueDate}</small> </p>
-                  </div>
-                  <div class="card-footer d-flex justify-content-between">
-                      <button class="btn btn-secondary btn-sm edit-task" data-id="${task.id}">Edit</button>
-                      <button class="btn btn-danger btn-sm delete-task" data-id="${task.id}">Delete</button>
-                  </div>
           <div class="card">
               <div class="card-body">
                   <h5 class="card-title">${task.title}</h5>
@@ -80,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             }">Add Comment</button>
                         </div>
               </div>
-              `;
               <div class="card-footer d-flex justify-content-between">
                   <button class="btn btn-secondary btn-sm edit-task"data-id="${
                     task.id
@@ -134,13 +123,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleEditTask(event) {
     try {
+      // alert(event.target.dataset.id);
+      //localizar la tarea quieren editar
       const taskId = parseInt(event.target.dataset.id);
       const task = tasks.find((t) => t.id === taskId);
+      //cargar los datos en el formulario
       document.getElementById("task-title").value = task.title;
       document.getElementById("task-desc").value = task.description;
       document.getElementById("due-date").value = task.dueDate;
+      //ponerlo en modo edicion
       isEditMode = true;
       edittingId = taskId;
+      //mostrar el modal
       const modal = new bootstrap.Modal(document.getElementById("taskModal"));
       modal.show();
     } catch (error) {
@@ -150,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function handleDeleteTask(event) {
+    // alert(event.target.dataset.id);
     const id = parseInt(event.target.dataset.id);
     const index = tasks.findIndex((t) => t.id === id);
     tasks.splice(index, 1);
@@ -164,13 +159,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const dueDate = document.getElementById("due-date").value;
 
     if (isEditMode) {
+      //todo editar
       const task = tasks.find((t) => t.id === edittingId);
       task.title = title;
       task.description = description;
       task.dueDate = dueDate;
     } else {
       const newTask = {
-        id: tasks.lenght + 1,
         id: tasks.length + 1,
         title: title,
         description: description,
@@ -191,9 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("show.bs.modal", function () {
       if (!isEditMode) {
         document.getElementById("task-form").reset();
-        //document.getElementById('task-title').value = "";
-        //document.getElementById('task-desc').value = "";
-        //document.getElementById('due-date').value = "";
         // document.getElementById('task-title').value = "";
         // document.getElementById('task-desc').value = "";
         // document.getElementById('due-date').value = "";
@@ -202,7 +194,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document
     .getElementById("taskModal")
-    .addEventListener("hiden.bs.modal", function () {
     .addEventListener("hidden.bs.modal", function () {
       edittingId = null;
       isEditMode = false;
