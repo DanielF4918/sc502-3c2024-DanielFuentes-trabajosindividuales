@@ -7,24 +7,28 @@ document.addEventListener("DOMContentLoaded", function () {
       title: "Complete project report",
       description: "Prepare and submit the project report",
       dueDate: "2024-12-01",
+      comments: [],
     },
     {
       id: 2,
       title: "Team Meeting",
       description: "Get ready for the season",
       dueDate: "2024-12-01",
+      comments: [],
     },
     {
       id: 3,
       title: "Code Review",
       description: "Check partners code",
       dueDate: "2024-12-01",
+      comments: [],
     },
     {
       id: 4,
       title: "Deploy",
       description: "Check deploy steps",
       dueDate: "2024-12-01",
+      comments: [],
     },
   ];
 
@@ -45,8 +49,48 @@ document.addEventListener("DOMContentLoaded", function () {
                       <button class="btn btn-secondary btn-sm edit-task" data-id="${task.id}">Edit</button>
                       <button class="btn btn-danger btn-sm delete-task" data-id="${task.id}">Delete</button>
                   </div>
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">${task.title}</h5>
+                  <p class="card-text">${task.description}</p>
+                  <p class="card-text"><small class="text-muted">Due: ${
+                    task.dueDate
+                  }</small> </p>
+                  <div class="comments-section">
+                            <h6>Comments:</h6>
+                            <ul class="list-group mb-2" id="comments-${
+                              task.id
+                            }">
+                                ${task.comments
+                                  .map(
+                                    (comment, index) => `
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        ${comment}
+                                        <button class="btn btn-danger btn-sm delete-comment" data-task-id="${task.id}" data-comment-index="${index}">Delete</button>
+                                    </li>
+                                `
+                                  )
+                                  .join("")}
+                            </ul>
+                            <input type="text" class="form-control mb-2" id="comment-input-${
+                              task.id
+                            }" placeholder="Add a comment">
+                            <button class="btn btn-primary add-comment" data-task-id="${
+                              task.id
+                            }">Add Comment</button>
+                        </div>
               </div>
               `;
+              <div class="card-footer d-flex justify-content-between">
+                  <button class="btn btn-secondary btn-sm edit-task"data-id="${
+                    task.id
+                  }">Edit</button>
+                  <button class="btn btn-danger btn-sm delete-task" data-id="${
+                    task.id
+                  }">Delete</button>
+              </div>
+          </div>
+          `;
       taskList.appendChild(taskCard);
     });
 
@@ -57,6 +101,35 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".delete-task").forEach(function (button) {
       button.addEventListener("click", handleDeleteTask);
     });
+    document.querySelectorAll(".add-comment").forEach(function (button) {
+      button.addEventListener("click", handleAddComment);
+    });
+
+    document.querySelectorAll(".delete-comment").forEach(function (button) {
+      button.addEventListener("click", handleDeleteComment);
+    });
+  }
+
+  function handleAddComment(event) {
+    const taskId = parseInt(event.target.dataset.taskId);
+    const commentInput = document.getElementById(`comment-input-${taskId}`);
+    const comment = commentInput.value.trim();
+    if (comment) {
+      const task = tasks.find((t) => t.id === taskId);
+      task.comments.push(comment);
+      commentInput.value = "";
+      loadTasks();
+    }
+  }
+
+  function handleDeleteComment(event) {
+    const taskId = parseInt(event.target.dataset.taskId);
+    const commentIndex = parseInt(event.target.dataset.commentIndex);
+    const task = tasks.find((t) => t.id === taskId);
+    if (task && task.comments[commentIndex]) {
+      task.comments.splice(commentIndex, 1);
+      loadTasks();
+    }
   }
 
   function handleEditTask(event) {
@@ -98,9 +171,11 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       const newTask = {
         id: tasks.lenght + 1,
+        id: tasks.length + 1,
         title: title,
         description: description,
         dueDate: dueDate,
+        comments: [],
       };
       tasks.push(newTask);
     }
@@ -119,11 +194,16 @@ document.addEventListener("DOMContentLoaded", function () {
         //document.getElementById('task-title').value = "";
         //document.getElementById('task-desc').value = "";
         //document.getElementById('due-date').value = "";
+        // document.getElementById('task-title').value = "";
+        // document.getElementById('task-desc').value = "";
+        // document.getElementById('due-date').value = "";
       }
     });
+
   document
     .getElementById("taskModal")
     .addEventListener("hiden.bs.modal", function () {
+    .addEventListener("hidden.bs.modal", function () {
       edittingId = null;
       isEditMode = false;
     });
