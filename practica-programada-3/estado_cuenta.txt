@@ -1,0 +1,15 @@
+ID: 1 - Descripción: Compra en supermercado - Monto: 34658
+ID: 2 - Descripción: Pago de servicios - Monto: 10000
+ID: 3 - Descripción: Compra en tienda online - Monto: 18700
+ID: 4 - Descripción: Compra en librería - Monto: 3500
+ID: 5 - Descripción: Pago de internet - Monto: 2500
+ID: 6 - Descripción: Compra de ropa - Monto: 10000
+ID: 7 - Descripción: Pago de gimnasio - Monto: 5000
+ID: 8 - Descripción: Compra de electrónicos - Monto: 25000
+ID: 9 - Descripción: Pago de teléfono móvil - Monto: 4500
+ID: 10 - Descripción: Compra en farmacia - Monto: 3000
+ID: 11 - Descripción: Pago de suscripción de software - Monto: 4000
+Monto Total de Contado: 120858
+Monto Total con Interés (2.6%): 124000.308
+Cashback (0.1%): 120.858
+Monto Final a Pagar: 123879.45
